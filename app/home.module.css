@@ -1,0 +1,111 @@
+.landing {
+  min-height: calc(100svh - 57px);
+}
+
+.hero {
+  background: var(--sw-surface);
+  border-bottom: 1px solid var(--sw-border);
+  padding: clamp(3.5rem, 10vw, 6rem) 0;
+}
+
+.heroInner {
+  max-width: 40rem;
+}
+
+.kicker {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sw-text-muted);
+  margin-bottom: 0.75rem;
+}
+
+.heroTitle {
+  font-size: clamp(2rem, 4.5vw, 2.75rem);
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: var(--sw-text);
+}
+
+.heroLead {
+  font-size: 1.0625rem;
+  color: var(--sw-text-muted);
+  max-width: 34rem;
+  line-height: 1.65;
+}
+
+.section {
+  padding: clamp(3rem, 7vw, 4.5rem) 0;
+}
+
+.sectionMuted {
+  background: var(--sw-bg);
+  border-top: 1px solid var(--sw-border);
+  border-bottom: 1px solid var(--sw-border);
+}
+
+.sectionTitle {
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.75rem;
+  color: var(--sw-text);
+}
+
+.steps {
+  counter-reset: step;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0;
+  border: 1px solid var(--sw-border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--sw-surface);
+}
+
+.steps li {
+  padding: 1.25rem 1.25rem 1.25rem 3.25rem;
+  position: relative;
+  border-bottom: 1px solid var(--sw-border);
+  color: var(--sw-text);
+  line-height: 1.6;
+}
+
+.steps li:last-child {
+  border-bottom: none;
+}
+
+.steps li::before {
+  counter-increment: step;
+  content: counter(step);
+  position: absolute;
+  left: 1rem;
+  top: 1.2rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 6px;
+  border: 1px solid var(--sw-border);
+  color: var(--sw-text-muted);
+  font-weight: 600;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--sw-bg);
+}
+
+.footerNote {
+  padding: 2rem 0 2.5rem;
+  font-size: 0.875rem;
+  color: var(--sw-text-muted);
+  text-align: center;
+  border-top: 1px solid var(--sw-border);
+}
+
+.muted {
+  color: var(--sw-text-muted);
+}

@@ -1,13 +1,17 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  color-scheme: light;
+
+  --sw-text: #111827;
+  --sw-text-muted: #5c6370;
+  --sw-bg: #f4f5f7;
+  --sw-surface: #ffffff;
+  --sw-border: #e3e6ec;
+  --sw-link: #1e4a8c;
+  --sw-link-hover: #153a72;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: light;
 }
 
 html,
@@ -17,26 +21,122 @@ body {
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  color: var(--sw-text);
+  background: var(--sw-bg);
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  line-height: 1.55;
 }
 
 * {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
 }
 
-a {
-  color: inherit;
+/* Inline links: readable on light surfaces (avoid inheriting wrong colors) */
+a:not([class*="btn"]):not([class*="nav-link"]):not([class*="navbar-brand"]) {
+  color: var(--sw-link);
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+a:not([class*="btn"]):not([class*="nav-link"]):not([class*="navbar-brand"]):hover {
+  color: var(--sw-link-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sw-surface {
+  background: var(--sw-surface);
+  border: 1px solid var(--sw-border);
+  border-radius: 12px;
+}
+
+.sw-panel {
+  background: var(--sw-surface);
+  border: 1px solid var(--sw-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+/* Navbar: light, minimal */
+.sw-navbar {
+  background: var(--sw-surface) !important;
+  border-bottom: 1px solid var(--sw-border) !important;
+  box-shadow: none !important;
+}
+
+.sw-navbar .navbar-brand {
+  color: var(--sw-text) !important;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.sw-navbar .nav-link {
+  color: var(--sw-text-muted) !important;
+  font-weight: 500;
+  padding-inline: 0.65rem !important;
+}
+
+.sw-navbar .nav-link:hover,
+.sw-navbar .nav-link:focus {
+  color: var(--sw-text) !important;
+}
+
+.sw-navbar .nav-link.active {
+  color: var(--sw-text) !important;
+}
+
+.sw-navbar .navbar-toggler {
+  border-color: var(--sw-border);
+}
+
+.sw-navbar .text-email {
+  color: var(--sw-text-muted) !important;
+  font-size: 0.8125rem;
+}
+
+/* Forms: clearer edges on our gray background */
+.form-control,
+.form-select {
+  border-color: var(--sw-border);
+  color: var(--sw-text);
+  background-color: var(--sw-surface);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #9aa3b2;
+  box-shadow: 0 0 0 0.2rem rgba(17, 24, 39, 0.06);
+}
+
+.form-label {
+  color: var(--sw-text);
+  font-weight: 500;
+}
+
+.form-text {
+  color: var(--sw-text-muted);
+}
+
+.sw-muted-heading {
+  color: var(--sw-text-muted);
+  letter-spacing: 0.08em;
+  font-weight: 600;
+}
+
+/* Bootstrap link button: keep readable */
+.btn-link {
+  color: var(--sw-link);
+}
+
+.btn-link:hover {
+  color: var(--sw-link-hover);
 }

@@ -1,94 +1,88 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import styles from "./page.module.css";
+import Link from "next/link";
+import styles from "./home.module.css";
 
 export default function Home() {
-  const [clothes, setClothes] = useState([]);
-  const [weather, setWeather] = useState("Clear");
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function loadClothes() {
-      setLoading(true);
-      const res = await fetch(`/api/clothes?weather=${weather}`);
-      const data = await res.json();
-      setClothes(data);
-      setLoading(false);
-    }
-    loadClothes();
-  }, [weather]);
-
   return (
-    <div className={`container ${styles.page}`}>
-      <header className={`text-center ${styles.hero}`}>
-        <h1 className={styles.title}>Smart Wardrobe</h1>
-        <p className={styles.subtitle}>
-          Outfit ideas for Pathum Thani — weather:{" "}
-          <strong className="text-dark">{weather}</strong>
-        </p>
-        <div className={styles.weatherRow}>
-          <span className={styles.weatherLabel}>Pick weather:</span>
-          <div className="btn-group shadow-sm" role="group" aria-label="Weather">
-            <button
-              type="button"
-              className={`btn ${weather === "Clear" ? "btn-warning" : "btn-outline-warning"}`}
-              onClick={() => setWeather("Clear")}
-            >
-              Sunny
-            </button>
-            <button
-              type="button"
-              className={`btn ${weather === "Rain" ? "btn-info text-white" : "btn-outline-info"}`}
-              onClick={() => setWeather("Rain")}
-            >
-              Rainy
-            </button>
-            <button
-              type="button"
-              className={`btn ${weather === "Clouds" ? "btn-secondary" : "btn-outline-secondary"}`}
-              onClick={() => setWeather("Clouds")}
-            >
-              Cloudy
-            </button>
+    <main className={styles.landing}>
+      <section className={styles.hero}>
+        <div className="container">
+          <div className={styles.heroInner}>
+            <p className={styles.kicker}>CSC350 · Smart wardrobe</p>
+            <h1 className={styles.heroTitle}>
+              Dress with confidence for the weather you are in.
+            </h1>
+            <p className={`${styles.heroLead} mt-3 mb-4`}>
+              Organize your clothes with photos, short notes, and weather tags.
+              Your wardrobe is private to your account after you sign in.
+            </p>
+            <div className="d-flex flex-wrap gap-2">
+              <Link href="/signup" className="btn btn-dark btn-lg px-4 rounded-pill">
+                Create account
+              </Link>
+              <Link
+                href="/login"
+                className="btn btn-outline-secondary btn-lg px-4 rounded-pill"
+              >
+                Log in
+              </Link>
+            </div>
           </div>
         </div>
-      </header>
+      </section>
 
-      {loading ? (
-        <p className={styles.loading}>Loading clothes…</p>
-      ) : (
-        <div className="row g-4">
-          {clothes.length > 0 ? (
-            clothes.map((item) => (
-              <div key={item.id} className="col-sm-6 col-md-4 col-lg-3">
-                <div
-                  className={`card h-100 border-0 shadow-sm ${styles.cardWrap}`}
-                >
-                  <img
-                    src={item.img}
-                    className="card-img-top"
-                    alt={item.name}
-                    style={{ height: "200px", objectFit: "cover" }}
-                  />
-                  <div className="card-body text-center">
-                    <h2 className="h6 card-title fw-bold mb-2">{item.name}</h2>
-                    <span className="badge rounded-pill bg-light text-dark border">
-                      {item.weather}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="col-12">
-              <p className={styles.empty}>
-                No items for this weather. Try another button above.
+      <section
+        className={`${styles.section} ${styles.sectionMuted}`}
+        id="about"
+      >
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-lg-7">
+              <h2 className={styles.sectionTitle}>About us</h2>
+              <p className={`${styles.muted} lead mb-0`} style={{ fontSize: "1.05rem" }}>
+                Smart Wardrobe helps you remember what you own and pick outfits
+                that match the forecast. Upload items once, add a description,
+                and tag them for sunny, rainy, or cloudy days.
               </p>
+              <Link
+                href="/about"
+                className="btn btn-outline-secondary mt-4 rounded-pill"
+              >
+                Read more
+              </Link>
             </div>
-          )}
+          </div>
         </div>
-      )}
-    </div>
+      </section>
+
+      <section className={styles.section} id="how-it-works">
+        <div className="container">
+          <h2 className={`${styles.sectionTitle} mb-4`}>How it works</h2>
+          <div className="row justify-content-center">
+            <div className="col-lg-8">
+              <ol className={styles.steps}>
+                <li>
+                  <strong>Create an account</strong> or log in. Your wardrobe
+                  opens only after you are signed in.
+                </li>
+                <li>
+                  <strong>Open Wardrobe</strong> and add each piece: photo,
+                  name, description, and the weather it suits.
+                </li>
+                <li>
+                  <strong>Filter by weather</strong> to see what fits the day
+                  you are planning for.
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className={`container ${styles.footerNote}`}>
+        <p className="mb-0">
+          New here? <Link href="/signup">Sign up</Link> to start.
+        </p>
+      </div>
+    </main>
   );
 }

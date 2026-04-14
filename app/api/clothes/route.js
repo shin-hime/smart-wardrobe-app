@@ -1,20 +1,70 @@
 import { NextResponse } from "next/server";
+import { getSessionUserIdFromCookies } from "@/lib/session";
+import { addClothingItem, getWardrobe } from "@/lib/store";
+
+const WEATHER_OPTIONS = new Set(["Clear", "Rain", "Clouds"]);
 
 export async function GET(request) {
+  const userId = await getSessionUserIdFromCookies();
+  if (!userId) {
+    return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+  }
   const { searchParams } = new URL(request.url);
-  const filter = searchParams.get('weather'); // Get the weather from the URL
+  const filter = searchParams.get("weather");
+  let items = getWardrobe(userId);
+  if (filter && WEATHER_OPTIONS.has(filter)) {
+    items = items.filter((item) => item.weather === filter);
+  }
+  return NextResponse.json(items);
+}
 
-  const wardrobe = [
-    { id: 1, name: "Cool Cotton T-Shirt", weather: "Clear", img: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=200" },
-    { id: 2, name: "Waterproof Windbreaker", weather: "Rain", img: "https://images.unsplash.com/photo-1544022613-e87ca75a784a?w=200" },
-    { id: 3, name: "Light Hoodie", weather: "Clouds", img: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=200" },
-    { id: 4, name: "Linen Shirt", weather: "Clear", img: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=200" }
-  ];
+export async function POST(request) {
+  const userId = await getSessionUserIdFromCookies();
+  if (!userId) {
+    return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+  }
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body." }, { status: 400 });
+  }
+  const name = typeof body.name === "string" ? body.name.trim() : "";
+  const description =
+    typeof body.description === "string" ? body.description.trim() : "";
+  const weather = typeof body.weather === "string" ? body.weather : "";
+  const img = typeof body.img === "string" ? body.img : "";
 
-  // If there's a filter, only return matching clothes
-  const filteredWardrobe = filter 
-    ? wardrobe.filter(item => item.weather === filter) 
-    : wardrobe;
+  if (!name) {
+    return NextResponse.json({ error: "Name is required." }, { status: 400 });
+  }
+  if (!WEATHER_OPTIONS.has(weather)) {
+    return NextResponse.json(
+      { error: "Weather must be Clear, Rain, or Clouds." },
+      { status: 400 }
+    );
+  }
+  if (!img || !img.startsWith("data:image/")) {
+    return NextResponse.json(
+      { error: "A valid image (data URL) is required." },
+      { status: 400 }
+    );
+  }
+  if (img.length > 2_500_000) {
+    return NextResponse.json(
+      { error: "Image is too large. Try a smaller photo." },
+      { status: 400 }
+    );
+  }
 
-  return NextResponse.json(filteredWardrobe);
+  const created = addClothingItem(userId, {
+    name,
+    description,
+    weather,
+    img,
+  });
+  if (!created) {
+    return NextResponse.json({ error: "Could not save item." }, { status: 500 });
+  }
+  return NextResponse.json(created, { status: 201 });
 }
