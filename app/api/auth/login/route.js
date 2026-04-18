@@ -18,7 +18,16 @@ export async function POST(request) {
       { status: 400 }
     );
   }
-  const result = verifyUser(email, password);
+  let result;
+  try {
+    result = await verifyUser(email, password);
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json(
+      { error: "Database unavailable." },
+      { status: 503 }
+    );
+  }
   if (!result.ok) {
     return NextResponse.json({ error: result.error }, { status: 401 });
   }

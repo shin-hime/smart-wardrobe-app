@@ -7,7 +7,13 @@ export async function GET() {
   if (!userId) {
     return NextResponse.json({ user: null });
   }
-  const user = getUserById(userId);
+  let user;
+  try {
+    user = await getUserById(userId);
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json({ user: null });
+  }
   if (!user) {
     return NextResponse.json({ user: null });
   }

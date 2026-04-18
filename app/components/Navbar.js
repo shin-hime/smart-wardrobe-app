@@ -71,16 +71,28 @@ export default function Navbar() {
               </Link>
             </li>
             {isAuthed ? (
-              <li className="nav-item">
-                <Link
-                  className={`nav-link ${
-                    pathname.startsWith("/wardrobe") ? "active" : ""
-                  }`}
-                  href="/wardrobe"
-                >
-                  Wardrobe
-                </Link>
-              </li>
+              <>
+                <li className="nav-item">
+                  <Link
+                    className={`nav-link ${
+                      pathname.startsWith("/wardrobe") ? "active" : ""
+                    }`}
+                    href="/wardrobe"
+                  >
+                    Wardrobe
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link
+                    className={`nav-link ${
+                      pathname.startsWith("/ootd") ? "active" : ""
+                    }`}
+                    href="/ootd"
+                  >
+                    OOTD
+                  </Link>
+                </li>
+              </>
             ) : null}
           </ul>
           <ul className="navbar-nav ms-md-auto align-items-md-center gap-2">

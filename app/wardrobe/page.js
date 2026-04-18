@@ -20,10 +20,13 @@ export default function WardrobePage() {
   const [clothes, setClothes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [formError, setFormError] = useState("");
+  const [formSuccess, setFormSuccess] = useState("");
   const [saving, setSaving] = useState(false);
+  const [fileInputKey, setFileInputKey] = useState(0);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [itemWeather, setItemWeather] = useState("Clear");
+  const [itemCategory, setItemCategory] = useState("top");
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState("");
 
@@ -85,9 +88,16 @@ export default function WardrobePage() {
     return () => URL.revokeObjectURL(url);
   }, [file]);
 
+  useEffect(() => {
+    if (!formSuccess) return;
+    const t = setTimeout(() => setFormSuccess(""), 4500);
+    return () => clearTimeout(t);
+  }, [formSuccess]);
+
   async function onAddItem(e) {
     e.preventDefault();
     setFormError("");
+    setFormSuccess("");
     if (!file) {
       setFormError("Choose a photo for this item.");
       return;
@@ -103,6 +113,7 @@ export default function WardrobePage() {
           name,
           description,
           weather: itemWeather,
+          category: itemCategory,
           img,
         }),
       });
@@ -114,7 +125,10 @@ export default function WardrobePage() {
       setName("");
       setDescription("");
       setItemWeather("Clear");
+      setItemCategory("top");
       setFile(null);
+      setFileInputKey((k) => k + 1);
+      setFormSuccess("Item saved to your wardrobe.");
       // Reload list for the current weather filter
       const listRes = await fetch(
         `/api/clothes?weather=${encodeURIComponent(weather)}`,
@@ -182,17 +196,26 @@ export default function WardrobePage() {
                 {formError}
               </div>
             ) : null}
+            {formSuccess ? (
+              <div className="alert alert-success py-2 small" role="status">
+                {formSuccess}
+              </div>
+            ) : null}
             <form onSubmit={onAddItem}>
               <div className="mb-3">
                 <label className="form-label small" htmlFor="photo">
                   Photo
                 </label>
                 <input
+                  key={fileInputKey}
                   id="photo"
                   type="file"
                   className="form-control"
                   accept="image/*"
-                  onChange={(e) => setFile(e.target.files?.[0] || null)}
+                  onChange={(e) => {
+                    setFormSuccess("");
+                    setFile(e.target.files?.[0] || null);
+                  }}
                 />
                 {preview ? (
                   <Image
@@ -250,6 +273,24 @@ export default function WardrobePage() {
                   <option value="Clouds">Clouds</option>
                 </select>
               </div>
+              <div className="mb-3">
+                <label className="form-label small" htmlFor="itemCategory">
+                  Type of item
+                </label>
+                <select
+                  id="itemCategory"
+                  className="form-select"
+                  value={itemCategory}
+                  onChange={(e) => setItemCategory(e.target.value)}
+                >
+                  <option value="hat">Hat / accessory</option>
+                  <option value="top">Top</option>
+                  <option value="bottom">Pants / skirt</option>
+                  <option value="dress">Dress</option>
+                  <option value="shoes">Shoes</option>
+                  <option value="bag">Bag</option>
+                </select>
+              </div>
               <button
                 type="submit"
                 className="btn btn-dark w-100"
@@ -284,9 +325,14 @@ export default function WardrobePage() {
                           {item.description}
                         </p>
                       ) : null}
-                      <span className="badge text-bg-light border">
-                        {item.weather}
-                      </span>
+                      <div className="d-flex flex-wrap gap-1">
+                        <span className="badge text-bg-light border">
+                          {item.weather}
+                        </span>
+                        <span className="badge text-bg-secondary">
+                          {item.category || "top"}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>

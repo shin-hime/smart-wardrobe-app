@@ -24,9 +24,21 @@ export async function POST(request) {
       { status: 400 }
     );
   }
-  const result = createUser(email, password);
+  let result;
+  try {
+    result = await createUser(email, password);
+  } catch (e) {
+    console.error(e);
+    return NextResponse.json(
+      { error: "Database unavailable." },
+      { status: 503 }
+    );
+  }
   if (!result.ok) {
-    return NextResponse.json({ error: result.error }, { status: 409 });
+    return NextResponse.json(
+      { error: result.error },
+      { status: result.conflict ? 409 : 500 }
+    );
   }
   const token = createSessionToken(result.user.id);
   const cookieStore = await cookies();
