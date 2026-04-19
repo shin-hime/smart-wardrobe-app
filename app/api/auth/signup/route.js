@@ -12,11 +12,16 @@ export async function POST(request) {
   }
   const email = typeof body.email === "string" ? body.email : "";
   const password = typeof body.password === "string" ? body.password : "";
+  const displayName =
+    typeof body.name === "string" ? body.name.trim() : "";
   if (!email || !password) {
     return NextResponse.json(
       { error: "Email and password are required." },
       { status: 400 }
     );
+  }
+  if (!displayName) {
+    return NextResponse.json({ error: "Name is required." }, { status: 400 });
   }
   if (password.length < 6) {
     return NextResponse.json(
@@ -26,7 +31,7 @@ export async function POST(request) {
   }
   let result;
   try {
-    result = await createUser(email, password);
+    result = await createUser(email, password, displayName);
   } catch (e) {
     console.error(e);
     return NextResponse.json(
@@ -35,10 +40,12 @@ export async function POST(request) {
     );
   }
   if (!result.ok) {
-    return NextResponse.json(
-      { error: result.error },
-      { status: result.conflict ? 409 : 500 }
-    );
+    const status = result.conflict
+      ? 409
+      : result.error === "Name is required."
+        ? 400
+        : 500;
+    return NextResponse.json({ error: result.error }, { status });
   }
   const token = createSessionToken(result.user.id);
   const cookieStore = await cookies();

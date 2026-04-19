@@ -92,6 +92,16 @@ export default function Navbar() {
                     OOTD
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link
+                    className={`nav-link ${
+                      pathname.startsWith("/profile") ? "active" : ""
+                    }`}
+                    href="/profile"
+                  >
+                    Profile
+                  </Link>
+                </li>
               </>
             ) : null}
           </ul>
@@ -103,13 +113,14 @@ export default function Navbar() {
             ) : isAuthed ? (
               <>
                 <li className="nav-item">
-                  <span
-                    className="nav-link text-email py-md-2 mb-0 text-truncate d-inline-block"
-                    style={{ maxWidth: "14rem" }}
-                    title={user.email}
+                  <Link
+                    href="/profile"
+                    className="nav-link py-md-2 mb-0 text-truncate d-inline-block fw-semibold"
+                    style={{ maxWidth: "12rem" }}
+                    title={user.email ? `Signed in as ${user.email}` : ""}
                   >
-                    {user.email}
-                  </span>
+                    {user.name || user.email}
+                  </Link>
                 </li>
                 <li className="nav-item">
                   <button

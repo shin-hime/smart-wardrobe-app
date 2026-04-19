@@ -1,13 +1,19 @@
 :root {
   color-scheme: light;
 
-  --sw-text: #111827;
-  --sw-text-muted: #5c6370;
-  --sw-bg: #f4f5f7;
+  /* Mocha text + near-white surfaces (cream kept for buttons-on-brown) */
+  --sw-mocha: #4b3935;
+  --sw-mocha-hover: #3d2e2a;
+  --sw-cream: #f0e7d5;
+
+  --sw-text: var(--sw-mocha);
+  --sw-text-muted: rgba(75, 57, 53, 0.68);
+  --sw-bg: #fafaf9;
+  --sw-bg-muted: #f3f2f0;
   --sw-surface: #ffffff;
-  --sw-border: #e3e6ec;
-  --sw-link: #1e4a8c;
-  --sw-link-hover: #153a72;
+  --sw-border: rgba(75, 57, 53, 0.2);
+  --sw-link: #5c443d;
+  --sw-link-hover: var(--sw-mocha-hover);
 }
 
 html {
@@ -113,8 +119,8 @@ a:not([class*="btn"]):not([class*="nav-link"]):not([class*="navbar-brand"]):hove
 
 .form-control:focus,
 .form-select:focus {
-  border-color: #9aa3b2;
-  box-shadow: 0 0 0 0.2rem rgba(17, 24, 39, 0.06);
+  border-color: rgba(75, 57, 53, 0.45);
+  box-shadow: 0 0 0 0.2rem rgba(75, 57, 53, 0.12);
 }
 
 .form-label {
@@ -139,4 +145,65 @@ a:not([class*="btn"]):not([class*="nav-link"]):not([class*="navbar-brand"]):hove
 
 .btn-link:hover {
   color: var(--sw-link-hover);
+}
+
+/* Bootstrap buttons → mocha + cream */
+.btn-dark {
+  --bs-btn-color: var(--sw-cream);
+  --bs-btn-bg: var(--sw-mocha);
+  --bs-btn-border-color: var(--sw-mocha);
+  --bs-btn-hover-color: var(--sw-cream);
+  --bs-btn-hover-bg: var(--sw-mocha-hover);
+  --bs-btn-hover-border-color: var(--sw-mocha-hover);
+  --bs-btn-focus-shadow-rgb: 75, 57, 53;
+  --bs-btn-active-color: var(--sw-cream);
+  --bs-btn-active-bg: var(--sw-mocha-hover);
+  --bs-btn-active-border-color: var(--sw-mocha-hover);
+}
+
+.btn-outline-secondary {
+  --bs-btn-color: var(--sw-mocha);
+  --bs-btn-border-color: rgba(75, 57, 53, 0.42);
+  --bs-btn-hover-color: var(--sw-cream);
+  --bs-btn-hover-bg: var(--sw-mocha);
+  --bs-btn-hover-border-color: var(--sw-mocha);
+  --bs-btn-active-color: var(--sw-cream);
+  --bs-btn-active-bg: var(--sw-mocha);
+  --bs-btn-active-border-color: var(--sw-mocha);
+}
+
+.alert-danger {
+  --bs-alert-bg: rgba(120, 60, 55, 0.09);
+  --bs-alert-border-color: rgba(120, 60, 55, 0.28);
+  --bs-alert-color: #5c2c28;
+}
+
+.alert-success {
+  --bs-alert-bg: rgba(75, 90, 60, 0.1);
+  --bs-alert-border-color: rgba(75, 90, 60, 0.28);
+  --bs-alert-color: #3d4a32;
+}
+
+.text-bg-secondary {
+  background-color: rgba(75, 57, 53, 0.82) !important;
+  color: var(--sw-cream) !important;
+}
+
+/* Cards / empty states: warm surface instead of stark white */
+.bg-white {
+  background-color: var(--sw-surface) !important;
+}
+
+.text-secondary {
+  color: var(--sw-text-muted) !important;
+}
+
+.bg-light {
+  background-color: #f0efed !important;
+}
+
+.badge.text-bg-light {
+  background-color: #eceae8 !important;
+  color: var(--sw-mocha) !important;
+  border-color: rgba(75, 57, 53, 0.18) !important;
 }

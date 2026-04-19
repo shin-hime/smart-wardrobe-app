@@ -23,12 +23,19 @@ export default function WardrobePage() {
   const [formSuccess, setFormSuccess] = useState("");
   const [saving, setSaving] = useState(false);
   const [fileInputKey, setFileInputKey] = useState(0);
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [itemWeather, setItemWeather] = useState("Clear");
-  const [itemCategory, setItemCategory] = useState("top");
+  const [form, setForm] = useState({
+    name: "",
+    description: "",
+    itemWeather: "Clear",
+    itemCategory: "top",
+  });
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState("");
+
+  function onFormChange(e) {
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
+  }
 
   // If not logged in, send to login page (no middleware file).
   useEffect(() => {
@@ -110,10 +117,10 @@ export default function WardrobePage() {
         headers: { "Content-Type": "application/json" },
         credentials: "include",
         body: JSON.stringify({
-          name,
-          description,
-          weather: itemWeather,
-          category: itemCategory,
+          name: form.name,
+          description: form.description,
+          weather: form.itemWeather,
+          category: form.itemCategory,
           img,
         }),
       });
@@ -122,10 +129,12 @@ export default function WardrobePage() {
         setFormError(data.error || "Could not save item.");
         return;
       }
-      setName("");
-      setDescription("");
-      setItemWeather("Clear");
-      setItemCategory("top");
+      setForm({
+        name: "",
+        description: "",
+        itemWeather: "Clear",
+        itemCategory: "top",
+      });
       setFile(null);
       setFileInputKey((k) => k + 1);
       setFormSuccess("Item saved to your wardrobe.");
@@ -239,9 +248,10 @@ export default function WardrobePage() {
                 </label>
                 <input
                   id="name"
+                  name="name"
                   className="form-control"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={form.name}
+                  onChange={onFormChange}
                   required
                 />
               </div>
@@ -251,10 +261,11 @@ export default function WardrobePage() {
                 </label>
                 <textarea
                   id="description"
+                  name="description"
                   className="form-control"
                   rows={3}
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  value={form.description}
+                  onChange={onFormChange}
                   placeholder="Fabric, fit, occasion…"
                 />
               </div>
@@ -264,9 +275,10 @@ export default function WardrobePage() {
                 </label>
                 <select
                   id="itemWeather"
+                  name="itemWeather"
                   className="form-select"
-                  value={itemWeather}
-                  onChange={(e) => setItemWeather(e.target.value)}
+                  value={form.itemWeather}
+                  onChange={onFormChange}
                 >
                   <option value="Clear">Clear / sunny</option>
                   <option value="Rain">Rain</option>
@@ -279,9 +291,10 @@ export default function WardrobePage() {
                 </label>
                 <select
                   id="itemCategory"
+                  name="itemCategory"
                   className="form-select"
-                  value={itemCategory}
-                  onChange={(e) => setItemCategory(e.target.value)}
+                  value={form.itemCategory}
+                  onChange={onFormChange}
                 >
                   <option value="hat">Hat / accessory</option>
                   <option value="top">Top</option>

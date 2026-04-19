@@ -8,10 +8,13 @@ function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const next = searchParams.get("next") || "/wardrobe";
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+
+  function onChange(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -22,17 +25,14 @@ function LoginForm() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(form),
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        setError(data.error || "Could not log in.");
-        return;
-      }
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || "Could not log in.");
       router.push(next.startsWith("/") ? next : "/wardrobe");
       router.refresh();
-    } catch {
-      setError("Network error. Try again.");
+    } catch (err) {
+      setError(err.message || "Network error. Try again.");
     } finally {
       setSubmitting(false);
     }
@@ -47,15 +47,7 @@ function LoginForm() {
         Need an account? <Link href="/signup">Create one</Link>.
       </p>
       {error ? (
-        <div
-          className="alert py-2 small mb-3"
-          role="alert"
-          style={{
-            background: "#fef2f2",
-            border: "1px solid #fecdca",
-            color: "#7f1d1d",
-          }}
-        >
+        <div className="alert alert-danger py-2 small mb-3" role="alert">
           {error}
         </div>
       ) : null}
@@ -66,11 +58,12 @@ function LoginForm() {
           </label>
           <input
             id="email"
+            name="email"
             type="email"
             className="form-control rounded-3"
             autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={form.email}
+            onChange={onChange}
             required
           />
         </div>
@@ -80,11 +73,12 @@ function LoginForm() {
           </label>
           <input
             id="password"
+            name="password"
             type="password"
             className="form-control rounded-3"
             autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={form.password}
+            onChange={onChange}
             required
           />
         </div>

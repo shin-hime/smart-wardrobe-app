@@ -6,10 +6,17 @@ import { useState } from "react";
 
 export default function SignupPage() {
   const router = useRouter();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+
+  function onChange(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
 
   async function onSubmit(e) {
     e.preventDefault();
@@ -20,17 +27,14 @@ export default function SignupPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify(form),
       });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) {
-        setError(data.error || "Could not create account.");
-        return;
-      }
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || "Could not create account.");
       router.push("/wardrobe");
       router.refresh();
-    } catch {
-      setError("Network error. Try again.");
+    } catch (err) {
+      setError(err.message || "Network error. Try again.");
     } finally {
       setSubmitting(false);
     }
@@ -45,30 +49,38 @@ export default function SignupPage() {
         Already registered? <Link href="/login">Log in</Link>.
       </p>
       {error ? (
-        <div
-          className="alert py-2 small mb-3"
-          role="alert"
-          style={{
-            background: "#fef2f2",
-            border: "1px solid #fecdca",
-            color: "#7f1d1d",
-          }}
-        >
+        <div className="alert alert-danger py-2 small mb-3" role="alert">
           {error}
         </div>
       ) : null}
       <form onSubmit={onSubmit} className="sw-panel p-4 p-md-5">
+        <div className="mb-3">
+          <label htmlFor="name" className="form-label small">
+            Your name
+          </label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            className="form-control rounded-3"
+            autoComplete="name"
+            value={form.name}
+            onChange={onChange}
+            required
+          />
+        </div>
         <div className="mb-3">
           <label htmlFor="email" className="form-label small">
             Email
           </label>
           <input
             id="email"
+            name="email"
             type="email"
             className="form-control rounded-3"
             autoComplete="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={form.email}
+            onChange={onChange}
             required
           />
         </div>
@@ -78,11 +90,12 @@ export default function SignupPage() {
           </label>
           <input
             id="password"
+            name="password"
             type="password"
             className="form-control rounded-3"
             autoComplete="new-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={form.password}
+            onChange={onChange}
             minLength={6}
             required
           />

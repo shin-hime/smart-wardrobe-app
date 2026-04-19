@@ -41,7 +41,7 @@
 }
 
 .sectionMuted {
-  background: var(--sw-bg);
+  background: var(--sw-bg-muted);
   border-top: 1px solid var(--sw-border);
   border-bottom: 1px solid var(--sw-border);
 }

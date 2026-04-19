@@ -26,10 +26,7 @@ export async function GET(request) {
     items = await getWardrobe(userId, weatherArg);
   } catch (e) {
     console.error(e);
-    return NextResponse.json(
-      { error: "Database unavailable." },
-      { status: 503 }
-    );
+    return NextResponse.json({ error: e.message }, { status: 500 });
   }
   return NextResponse.json(items);
 }
@@ -95,10 +92,7 @@ export async function POST(request) {
     });
   } catch (e) {
     console.error(e);
-    return NextResponse.json(
-      { error: "Database unavailable." },
-      { status: 503 }
-    );
+    return NextResponse.json({ error: e.message }, { status: 500 });
   }
   if (created && typeof created.saveError === "string") {
     return NextResponse.json({ error: created.saveError }, { status: 500 });

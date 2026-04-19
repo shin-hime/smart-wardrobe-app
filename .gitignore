@@ -1,5 +1,9 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# Class exercise copy: nested .git causes "embedded repository" warnings.
+# Keep the folder locally; do not commit it (or delete inner .git if you need it in the repo).
+class-reference/
+
 # dependencies
 /node_modules
 /.pnp
