@@ -27,8 +27,24 @@ function LoginForm() {
         credentials: "include",
         body: JSON.stringify(form),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.error || "Could not log in.");
+      const text = await res.text();
+      let data = {};
+      try {
+        data = text ? JSON.parse(text) : {};
+      } catch {
+        setError(
+          `Server error (${res.status}). Check that MySQL is running and env matches.`
+        );
+        return;
+      }
+      if (!res.ok) {
+        setError(
+          data.error ||
+            data.message ||
+            `Log in failed (HTTP ${res.status}).`
+        );
+        return;
+      }
       router.push(next.startsWith("/") ? next : "/wardrobe");
       router.refresh();
     } catch (err) {

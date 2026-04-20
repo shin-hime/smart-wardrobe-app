@@ -29,8 +29,24 @@ export default function SignupPage() {
         credentials: "include",
         body: JSON.stringify(form),
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.error || "Could not create account.");
+      const text = await res.text();
+      let data = {};
+      try {
+        data = text ? JSON.parse(text) : {};
+      } catch {
+        setError(
+          `Server error (${res.status}). Check that MySQL is running and db/schema + migrations are applied.`
+        );
+        return;
+      }
+      if (!res.ok) {
+        setError(
+          data.error ||
+            data.message ||
+            `Sign up failed (HTTP ${res.status}).`
+        );
+        return;
+      }
       router.push("/wardrobe");
       router.refresh();
     } catch (err) {
