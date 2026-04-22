@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { getSessionUserIdFromCookies } from "@/lib/session";
 import { deleteClothingItem, updateClothingItem } from "@/lib/store";
 
-const WEATHER_OPTIONS = new Set(["Clear", "Rain", "Clouds"]);
+const WEATHER_OPTIONS = new Set(["Clear", "Rain", "Clouds", "All"]);
 const CATEGORY_OPTIONS = new Set([
   "hat",
   "top",
@@ -47,7 +47,7 @@ export async function PUT(request, { params }) {
   }
   if (!WEATHER_OPTIONS.has(weather)) {
     return NextResponse.json(
-      { error: "Weather must be Clear, Rain, or Clouds." },
+      { error: "Weather must be Clear, Rain, Clouds, or All." },
       { status: 400 }
     );
   }

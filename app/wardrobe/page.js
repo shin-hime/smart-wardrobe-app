@@ -417,6 +417,7 @@ export default function WardrobePage() {
                   <option value="Clear">Clear / sunny</option>
                   <option value="Rain">Rain</option>
                   <option value="Clouds">Clouds</option>
+                  <option value="All">All weather</option>
                 </select>
               </div>
               <div className="mb-3">
@@ -512,6 +513,7 @@ export default function WardrobePage() {
                               <option value="Clear">Clear / sunny</option>
                               <option value="Rain">Rain</option>
                               <option value="Clouds">Clouds</option>
+                              <option value="All">All weather</option>
                             </select>
                           </div>
                           <div className="mb-2">
