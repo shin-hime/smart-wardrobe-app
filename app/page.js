@@ -158,6 +158,82 @@ export default function Home() {
         </div>
       </section>
 
+      <section className={`${styles.section} ${styles.sectionMuted}`} id="trending">
+        <div className="container">
+          <div className={`${styles.sectionHeader} d-flex justify-content-between align-items-end gap-3 flex-wrap`}>
+            <div>
+              <p className={styles.cardKicker}>Trending ideas</p>
+              <h2 className={`${styles.sectionTitle} mb-0`}>
+                Outfit inspiration this week
+              </h2>
+            </div>
+            <Link href="/ootd" className="btn btn-outline-secondary rounded-pill">
+              Try in OOTD
+            </Link>
+          </div>
+
+          <div className={styles.trendingGrid}>
+            <article className={styles.trendCard}>
+              <Image
+                src="/close-up-woman-looking-wardrobe.jpg"
+                alt="Minimal neutral outfit inspiration"
+                width={1000}
+                height={700}
+                className={styles.trendImage}
+              />
+              <div className={styles.trendBody}>
+                <h3 className={styles.trendTitle}>Minimal neutrals</h3>
+                <p className={styles.muted}>
+                  Clean layers in beige, white, and soft brown for everyday wear.
+                </p>
+                <div className={styles.trendTags}>
+                  <span>Clear</span>
+                  <span>Clouds</span>
+                </div>
+              </div>
+            </article>
+
+            <article className={styles.trendCard}>
+              <Image
+                src="/wardrobe-renovation-winter.jpg"
+                alt="Smart casual city look inspiration"
+                width={1000}
+                height={700}
+                className={styles.trendImage}
+              />
+              <div className={styles.trendBody}>
+                <h3 className={styles.trendTitle}>Smart casual city</h3>
+                <p className={styles.muted}>
+                  A polished mix of top, bottom, and shoes for classes or work.
+                </p>
+                <div className={styles.trendTags}>
+                  <span>All weather</span>
+                </div>
+              </div>
+            </article>
+
+            <article className={styles.trendCard}>
+              <Image
+                src="/clothes-donations-collected-charity.jpg"
+                alt="Rain day layered outfit inspiration"
+                width={1000}
+                height={700}
+                className={styles.trendImage}
+              />
+              <div className={styles.trendBody}>
+                <h3 className={styles.trendTitle}>Rain-day layers</h3>
+                <p className={styles.muted}>
+                  Functional pieces with easy layers so you stay comfortable.
+                </p>
+                <div className={styles.trendTags}>
+                  <span>Rain</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <div className={`container ${styles.footerNote}`}>
         <p className="mb-0">
           New here? <Link href="/signup">Sign up</Link> to start.
