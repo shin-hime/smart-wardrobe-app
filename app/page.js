@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import styles from "./home.module.css";
 
 export default function Home() {
@@ -7,24 +8,45 @@ export default function Home() {
       <section className={styles.hero}>
         <div className="container">
           <div className={styles.heroInner}>
-            <p className={styles.kicker}>CSC350 · Smart wardrobe</p>
-            <h1 className={styles.heroTitle}>
-              Dress with confidence for the weather you are in.
-            </h1>
-            <p className={`${styles.heroLead} mt-3 mb-4`}>
-              Organize your clothes with photos, short notes, and weather tags.
-              Your wardrobe is private to your account after you sign in.
-            </p>
-            <div className="d-flex flex-wrap gap-2">
-              <Link href="/signup" className="btn btn-dark btn-lg px-4 rounded-pill">
-                Create account
-              </Link>
-              <Link
-                href="/login"
-                className="btn btn-outline-secondary btn-lg px-4 rounded-pill"
-              >
-                Log in
-              </Link>
+            <div className={styles.heroCopy}>
+              <p className={styles.kicker}>CSC350 · Smart wardrobe</p>
+              <h1 className={styles.heroTitle}>
+                Build your wardrobe once, get outfit ideas every day.
+              </h1>
+              <p className={`${styles.heroLead} mt-3 mb-4`}>
+                Keep your pieces organized with photos and weather tags. Plan
+                faster with a clean view of what works for sunny, rainy, and
+                cloudy days.
+              </p>
+              <div className="d-flex flex-wrap gap-2">
+                <Link
+                  href="/signup"
+                  className="btn btn-dark btn-lg px-4 rounded-pill"
+                >
+                  Create account
+                </Link>
+                <Link
+                  href="/login"
+                  className="btn btn-outline-secondary btn-lg px-4 rounded-pill"
+                >
+                  Log in
+                </Link>
+              </div>
+              <div className={styles.heroMeta}>
+                <span>Private account</span>
+                <span>Weather-based tags</span>
+                <span>OOTD suggestions</span>
+              </div>
+            </div>
+            <div className={styles.heroVisual}>
+              <Image
+                src="/close-up-woman-looking-wardrobe.jpg"
+                alt="Woman choosing clothes from a wardrobe"
+                width={1200}
+                height={900}
+                className={styles.heroImage}
+                priority
+              />
             </div>
           </div>
         </div>
@@ -35,13 +57,23 @@ export default function Home() {
         id="about"
       >
         <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-lg-7">
-              <h2 className={styles.sectionTitle}>About us</h2>
-              <p className={`${styles.muted} lead mb-0`} style={{ fontSize: "1.05rem" }}>
+          <div className={styles.showcaseGrid}>
+            <div className={styles.showcaseCard}>
+              <Image
+                src="/wardrobe-renovation-winter.jpg"
+                alt="Organized wardrobe shelves"
+                width={1200}
+                height={800}
+                className={styles.sectionImage}
+              />
+            </div>
+            <div className={styles.showcaseContent}>
+              <p className={styles.cardKicker}>About smart wardrobe</p>
+              <h2 className={styles.sectionTitle}>Built for easy daily planning</h2>
+              <p className={`${styles.muted} mb-0`}>
                 Smart Wardrobe helps you remember what you own and pick outfits
-                that match the forecast. Upload items once, add a description,
-                and tag them for sunny, rainy, or cloudy days.
+                that match the forecast. Upload items once, add details, and
+                tag each piece for sunny, rainy, cloudy, or all-weather use.
               </p>
               <Link
                 href="/about"
@@ -56,8 +88,56 @@ export default function Home() {
 
       <section className={styles.section} id="how-it-works">
         <div className="container">
-          <h2 className={`${styles.sectionTitle} mb-4`}>How it works</h2>
-          <div className="row justify-content-center">
+          <div className={styles.sectionHeader}>
+            <p className={styles.cardKicker}>How it works</p>
+            <h2 className={`${styles.sectionTitle} mb-0`}>
+              A clean flow from closet to outfit
+            </h2>
+          </div>
+          <div className={styles.featureGrid}>
+            <article className={styles.featureCard}>
+              <Image
+                src="/close-up-woman-looking-wardrobe.jpg"
+                alt="Choosing clothing from wardrobe"
+                width={1000}
+                height={700}
+                className={styles.featureImage}
+              />
+              <h3 className={styles.featureTitle}>1. Save your clothes</h3>
+              <p className={styles.muted}>
+                Add photo, item type, and weather tags so your wardrobe stays
+                organized.
+              </p>
+            </article>
+            <article className={styles.featureCard}>
+              <Image
+                src="/clothes-donations-collected-charity.jpg"
+                alt="Grouped clothes ready to wear"
+                width={1000}
+                height={700}
+                className={styles.featureImage}
+              />
+              <h3 className={styles.featureTitle}>2. Filter by weather</h3>
+              <p className={styles.muted}>
+                Switch between sunny, rain, and cloudy views to plan faster.
+              </p>
+            </article>
+            <article className={styles.featureCard}>
+              <Image
+                src="/wardrobe-renovation-winter.jpg"
+                alt="Neatly arranged wardrobe"
+                width={1000}
+                height={700}
+                className={styles.featureImage}
+              />
+              <h3 className={styles.featureTitle}>3. Get outfit ideas</h3>
+              <p className={styles.muted}>
+                Use OOTD and suggestion mode to discover ready-to-wear
+                combinations.
+              </p>
+            </article>
+          </div>
+          <div className="row justify-content-center mt-4">
             <div className="col-lg-8">
               <ol className={styles.steps}>
                 <li>
