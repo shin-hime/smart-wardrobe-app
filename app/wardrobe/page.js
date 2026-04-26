@@ -463,18 +463,18 @@ export default function WardrobePage() {
           {loading ? (
             <p className="text-secondary small">Loading your items…</p>
           ) : clothes.length > 0 ? (
-            <div className="row g-3">
+            <div className="wardrobe-grid">
               {clothes.map((item) => (
-                <div key={item.id} className="col-md-6">
+                <div key={item.id} className="wardrobe-card">
                   <div className="card border h-100">
                     <Image
                       src={item.img}
                       className="card-img-top"
                       alt={item.name}
                       width={400}
-                      height={200}
+                      height={600}
                       unoptimized
-                      style={{ height: 200, objectFit: "cover" }}
+                      style={{ height: 300, objectFit: "cover" }}
                     />
                     <div className="card-body">
                       {editingId === item.id && editingData ? (

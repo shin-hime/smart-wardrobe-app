@@ -207,3 +207,57 @@ a:not([class*="btn"]):not([class*="nav-link"]):not([class*="navbar-brand"]):hove
   color: var(--sw-mocha) !important;
   border-color: rgba(75, 57, 53, 0.18) !important;
 }
+/* Pinterest-Style Masonry Grid */
+.wardrobe-grid {
+  column-count: 2; /* 2 columns on mobile */
+  column-gap: 1rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .wardrobe-grid {
+    column-count: 3; /* 3 columns on desktop */
+  }
+}
+
+.wardrobe-card {
+  display: inline-block; /* Required for masonry flow */
+  width: 100%;
+  break-inside: avoid; /* Prevents cards from splitting between columns */
+  margin-bottom: 1rem;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+/* Full Photo Visibility: This is where you adjust size for clarity */
+.pinterest-img {
+  width: 100% !important;
+  height: auto !important; /* Removes fixed 200px height to prevent cropping [cite: 783, 785] */
+  display: block;
+  object-fit: contain; /* Ensures the entire item (waistbands/hems) is visible [cite: 785, 786] */
+}
+/* Clean OOTD Collage View */
+.ootd-container {
+  background: #ffffff; /* Or a very light neutral like #fafafa */
+  border-radius: 20px;
+  padding: 2rem;
+}
+
+.ootd-slot {
+  background: transparent !important; /* Removes the "unnecessary" background */
+  border: none !important;            /* Removes the box borders */
+  box-shadow: none !important;        /* Removes shadows */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: -20px;               /* Pulls items closer together vertically */
+}
+
+.ootd-image {
+  width: auto !important;
+  max-height: 250px;                  /* Keeps items proportional */
+  object-fit: contain !important;
+  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.05)); /* Soft shadow on the cloth only */
+}
