@@ -7,47 +7,39 @@ export default function Home() {
   return (
     <main className={styles.landing}>
       <section className={styles.hero}>
-        <div className="container">
-          <div className={styles.heroInner}>
-            <div className={styles.heroCopy}>
-              <p className={styles.kicker}>CSC350 · Smart wardrobe</p>
-              <h1 className={styles.heroTitle}>
-                Build your wardrobe once, get outfit ideas every day.
-              </h1>
-              <p className={`${styles.heroLead} mt-3 mb-4`}>
-                Keep your pieces organized with photos and weather tags. Plan
-                faster with a clean view of what works for sunny, rainy, and
-                cloudy days.
-              </p>
-              <div className="d-flex flex-wrap gap-2">
-                <Link
-                  href="/signup"
-                  className="btn btn-dark btn-lg px-4 rounded-pill"
-                >
-                  Create account
-                </Link>
-                <Link
-                  href="/login"
-                  className="btn btn-outline-secondary btn-lg px-4 rounded-pill"
-                >
-                  Log in
-                </Link>
-              </div>
-              <div className={styles.heroMeta}>
-                <span>Private account</span>
-                <span>Weather-based tags</span>
-                <span>OOTD suggestions</span>
-              </div>
-            </div>
-            <div className={styles.heroVisual}>
-              <Image
-                src="/close-up-woman-looking-wardrobe.jpg"
-                alt="Woman choosing clothes from a wardrobe"
-                width={1200}
-                height={900}
-                className={styles.heroImage}
-                priority
-              />
+        <div className={styles.heroBackground}>
+          <Image
+            src="/young-japanese-woman-portrait-sitting-chair.jpg"
+            alt="Smart Wardrobe"
+            fill
+            className={styles.heroImage}
+            priority
+          />
+        </div>
+        <div className={`container ${styles.heroContainer}`}>
+          <div className={styles.heroCopy}>
+            <p className={styles.kicker}>CSC350 · Smart wardrobe</p>
+            <h1 className={styles.heroTitle}>
+              Build your wardrobe once, get outfit ideas every day.
+            </h1>
+            <p className={styles.heroLead}>
+              Keep your pieces organized with photos and weather tags. Plan
+              faster with a clean view of what works for sunny, rainy, and
+              cloudy days.
+            </p>
+            <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+              <Link
+                href="/signup"
+                className={styles.heroButton}
+              >
+                Create account
+              </Link>
+              <Link
+                href="/login"
+                className={styles.heroButtonOutline}
+              >
+                Log in
+              </Link>
             </div>
           </div>
         </div>

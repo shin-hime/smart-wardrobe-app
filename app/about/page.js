@@ -95,7 +95,7 @@ export default function AboutPage() {
           WITH SMART WARDROBE
         </div>
         <div className={styles.bottomLarge}>
-          We make every morning a harmonious blend of style and discovery. Start your organization with Smart Wardrobe - sign up now!
+          "Fit, confident & classy." Start your organization with Smart Wardrobe - sign up now!
         </div>
         <div className={styles.bottomLinks}>
           <Link href="/signup" className={styles.linkItem}>
