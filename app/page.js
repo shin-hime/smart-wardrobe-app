@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./home.module.css";
+import { TRENDING_OUTFITS } from "@/lib/trending";
 
 export default function Home() {
   return (
@@ -230,6 +231,26 @@ export default function Home() {
                 </div>
               </div>
             </article>
+            {TRENDING_OUTFITS.map((trend) => (
+              <article key={trend.id} className={styles.trendCard}>
+                <Image
+                  src={trend.image}
+                  alt={trend.alt}
+                  width={1000}
+                  height={700}
+                  className={styles.trendImage}
+                />
+                <div className={styles.trendBody}>
+                  <h3 className={styles.trendTitle}>{trend.title}</h3>
+                  <p className={styles.muted}>{trend.description}</p>
+                  <div className={styles.trendTags}>
+                    {trend.tags.map((tag) => (
+                      <span key={`${trend.id}-${tag}`}>{tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>

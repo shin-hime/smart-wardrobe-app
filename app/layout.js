@@ -1,6 +1,9 @@
+import { Outfit } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Shell from "./components/Shell";
 import "./globals.css";
+
+const outfit = Outfit({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Smart Wardrobe OOTD",
@@ -10,7 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
+      <body className={outfit.className}>
         <Shell>{children}</Shell>
       </body>
     </html>
