@@ -109,9 +109,9 @@ export default function OotdPage() {
         <div className="col-5 col-md-4">
           <p className="text-center small text-uppercase fw-bold text-secondary mb-2">Option A</p>
         <div className="outfit-board p-2 bg-white rounded-4 shadow-sm border" style={{ height: '65vh', overflowY: 'auto' }}>        
-              {rowsA.map((row, index) => (
+              {rowsA.length > 0 ? rowsA.map((row, index) => (
               <div key={`a-${index}`} className="position-relative mb-2 outfit-item">
-                <span className="badge position-absolute top-0 start-0 m-2 glass-badge2" style={{fontSize: '10px'}}>{row.label}</span>
+                <span className="badge position-absolute top-0 start-0 m-2 px-2 py-1 rounded" style={{fontSize: '10px',background: 'rgba(0, 0, 0, 0.65)',color: '#fff', backdropFilter: "blur(4px)"}}>{row.label}</span>
                 <Image
                   src={row.item.img}
                   alt=""
@@ -122,7 +122,8 @@ export default function OotdPage() {
                   style={{ width: '100%', height: 'auto',display: 'block', objectFit: 'cover' }}
                 />
               </div>
-            )) } <p className="text-center text-muted mt-5 small">No {weather} items</p>
+            )) : 
+            <p className="text-center text-muted mt-5 small">No {weather} items</p>}
           </div>
         </div>
 
@@ -132,7 +133,7 @@ export default function OotdPage() {
           <div className="outfit-board p-2 bg-white rounded-4 shadow-sm border" style={{ height: '65vh', overflowY: 'auto' }}>
             {rowsB.length > 0 ? rowsB.map((row, index) => (
               <div key={`b-${index}`} className="position-relative mb-2 outfit-item">
-                <span className="badge position-absolute top-0 start-0 m-2 glass-badge2" style={{fontSize: '10px'}}>{row.label}</span>
+                <span className="position-absolute top-0 start-0 m-2 px-2 py-1 rounded" style={{fontSize: '10px',background: 'rgba(0, 0, 0, 0.65)',color: '#fff', backdropFilter: "blur(4px)"}}>{row.label}</span>
                 <Image
                   src={row.item.img}
                   alt=""
@@ -143,7 +144,8 @@ export default function OotdPage() {
                   style={{ width: '100%', height: 'auto',display: 'block', objectFit: 'cover' }}
                 />
               </div>
-            )) : <p className="text-center text-muted mt-5 small">No {weather} items</p>}
+            )) : 
+            <p className="text-center text-muted mt-5 small">No {weather} items</p>}
           </div>
         </div>
       </div>
