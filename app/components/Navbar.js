@@ -119,7 +119,24 @@ export default function Navbar() {
                     style={{ maxWidth: "12rem" }}
                     title={user.email ? `Signed in as ${user.email}` : ""}
                   >
-                    {user.name || user.email}
+                    {/* 1. Display the Profile Picture (Avatar) */}
+                    {user.avatar ? (
+                      <img
+                        src={user.avatar}
+                        alt="Profile"
+                        className="rounded-circle border"
+                        style={{ width: "45px", height: "45px", objectFit: "cover" }}
+                      />
+                    ) : (
+                      <div 
+                        className="rounded-circle bg-secondary d-inline-block" 
+                        style={{ width: "45px", height: "45px" }} 
+                      />
+                    )}
+                    
+                    <span className="text-truncate" style={{ maxWidth: "10rem" }}>
+                      {user.name || user.email}
+                    </span>
                   </Link>
                 </li>
                 <li className="nav-item">

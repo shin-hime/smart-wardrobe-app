@@ -187,8 +187,8 @@ export default function Home() {
                   Clean layers in beige, white, and soft brown for everyday wear.
                 </p>
                 <div className={styles.trendTags}>
-                  <span>Clear</span>
-                  <span>Clouds</span>
+                  <span>Sunny</span>
+                  <span>Cloudy</span>
                 </div>
               </div>
             </article>
@@ -226,7 +226,7 @@ export default function Home() {
                   Functional pieces with easy layers so you stay comfortable.
                 </p>
                 <div className={styles.trendTags}>
-                  <span>Rain</span>
+                  <span>Rainy</span>
                 </div>
               </div>
             </article>
