@@ -1,34 +1,35 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
-import { buildOutfitSlots, buildSuggestedOutfitSlots } from "@/lib/outfit";
+import { useEffect, useState } from "react";
+import { buildSuggestedOutfitSlots } from "@/lib/outfit";
 
 export default function OotdPage() {
   const router = useRouter();
   const [allowed, setAllowed] = useState(false);
-  const [weather, setWeather] = useState("Clear");
+  const [weather, setWeather] = useState("Sunny"); // Standardized to match Wardrobe
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [suggestedRows, setSuggestedRows] = useState([]);
+  
+  // Separate states for both columns
+  const [rowsA, setRowsA] = useState([]);
+  const [rowsB, setRowsB] = useState([]);
 
+  // Auth check
   useEffect(() => {
-    let cancelled = false;
     (async () => {
       const res = await fetch("/api/auth/me", { credentials: "include" });
       const data = await res.json();
-      if (cancelled) return;
       if (!data.user) {
         router.replace("/login?next=/ootd");
         return;
       }
       setAllowed(true);
     })();
-    return () => { cancelled = true; };
   }, [router]);
 
+  // Load items and initialize random outfits
   useEffect(() => {
     if (!allowed) return;
     let cancelled = false;
@@ -40,7 +41,14 @@ export default function OotdPage() {
           { credentials: "include" }
         );
         const data = await res.json();
-        if (!cancelled) setItems(Array.isArray(data) ? data : []);
+        if (!cancelled) {
+          const dataArray = Array.isArray(data) ? data : [];
+          setItems(dataArray);
+          
+          // INITIAL RANDOMIZATION: Make them different on load
+          setRowsA(buildSuggestedOutfitSlots(dataArray));
+          setRowsB(buildSuggestedOutfitSlots(dataArray));
+        }
       } catch {
         if (!cancelled) setItems([]);
       } finally {
@@ -50,106 +58,94 @@ export default function OotdPage() {
     return () => { cancelled = true; };
   }, [allowed, weather]);
 
-  const outfitRows = useMemo(() => buildOutfitSlots(items), [items]);
+  // Shuffle Logic Functions
+  const handleShuffleA = () => {
+    setRowsA(buildSuggestedOutfitSlots(items));
+  };
 
-  useEffect(() => {
-    setSuggestedRows([]);
-  }, [weather, items.length]);
+  const handleShuffleB = () => {
+    setRowsB(buildSuggestedOutfitSlots(items));
+  };
 
-  if (!allowed) return <div className="container py-5 text-secondary small">Loading…</div>;
+  if (!allowed) return <div className="p-5 text-center text-muted">Loading…</div>;
 
   return (
     <div className="container py-5">
-      <div className="sw-panel p-4 mb-4 text-center">
-        <h1 className="h3 fw-semibold mb-2">Outfit Comparison</h1>
-        <div className="btn-group flex-wrap mb-3" role="group">
-          {["Clear", "Rain", "Clouds"].map((w) => (
+      <div className="sw-panel p-4 mb-4 text-center bg-white border rounded shadow-sm">
+        <h1 className="h4 fw-bold mb-3">Outfit Studio</h1>
+        
+        {/* Standardized Weather Buttons */}
+        <div className="btn-group mb-4 shadow-sm border rounded-pill overflow-hidden">
+          {["Sunny", "Rainy", "Cloudy"].map((w) => (
             <button
               key={w}
               type="button"
-              className={`btn btn-sm ${weather === w ? "btn-dark" : "btn-outline-secondary"}`}
+              className={`btn btn-sm px-4 ${weather === w ? "btn-dark" : "btn-light text-muted"}`}
               onClick={() => setWeather(w)}
             >
-              {w === "Clear" ? "Sunny" : w}
+              {w}
             </button>
           ))}
         </div>
-        <div className="mt-2">
+
+        {/* TWO SHUFFLE BUTTONS */}
+        <div className="d-flex justify-content-center gap-3">
+          <button className="btn btn-outline-dark rounded-pill px-4 fw-bold"
+            onClick={handleShuffleA}          
+            >
+            🔀 Shuffle Option A
+          </button>
           <button
-            type="button"
-            className="btn btn-dark rounded-pill px-4"
-            onClick={() => setSuggestedRows(buildSuggestedOutfitSlots(items))}
-            disabled={loading || items.length === 0}
+            className="btn btn-dark rounded-pill px-4 fw-bold"
+            onClick={handleShuffleB}
           >
             ✨ Shuffle Option B
           </button>
         </div>
       </div>
 
-      <div className="container-fluid">
-        {loading ? (
-          <p className="text-secondary text-center">Loading Wardrobe...</p>
-        ) : (
-          <div className="row g-4 justify-content-center">
-            
-            {/* COLUMN 1: OPTION A (SCROLLABLE) */}
-            <div className="col-6 col-md-5">
-              <h2 className="h6 text-center text-uppercase text-secondary mb-3">Option A</h2>
-              <div 
-                className="bg-white rounded-4 shadow-sm p-3" 
-                style={{ height: '70vh', overflowY: 'auto', border: '1px solid #eee' }}
-              >
-                {outfitRows.map((row, index) => (
-                  <div key={`mine-${index}`} className="text-center mb-4">
-                    <span className="badge text-bg-light border mb-2" style={{ fontSize: '10px' }}>{row.label}</span>
-                    <Image
-                      src={row.item.img}
-                      alt=""
-                      width={400}
-                      height={500}
-                      unoptimized
-                      style={{ width: '100%', height: 'auto', objectFit: 'contain', maxHeight: '400px' }}
-                      className="img-fluid rounded"
-                    />
-                    <p className="small fw-medium mt-2">{row.item.name}</p>
-                  </div>
-                ))}
+      <div className="row g-4 justify-content-center">
+        {/* OPTION A */}
+        <div className="col-5 col-md-4">
+          <p className="text-center small text-uppercase fw-bold text-secondary mb-2">Option A</p>
+        <div className="outfit-board p-2 bg-white rounded-4 shadow-sm border" style={{ height: '65vh', overflowY: 'auto' }}>        
+              {rowsA.map((row, index) => (
+              <div key={`a-${index}`} className="position-relative mb-2 outfit-item">
+                <span className="badge position-absolute top-0 start-0 m-2 glass-badge2" style={{fontSize: '10px'}}>{row.label}</span>
+                <Image
+                  src={row.item.img}
+                  alt=""
+                  width={500}
+                  height={600}
+                  unoptimized
+                  className="img-fluid rounded-3 shadow-sm border bg-white"
+                  style={{ width: '100%', height: 'auto',display: 'block', objectFit: 'cover' }}
+                />
               </div>
-            </div>
-
-            {/* COLUMN 2: OPTION B (SCROLLABLE) */}
-            <div className="col-6 col-md-5">
-              <h2 className="h6 text-center text-uppercase text-secondary mb-3">Option B</h2>
-              <div 
-                className="bg-white rounded-4 shadow-sm p-3" 
-                style={{ height: '70vh', overflowY: 'auto', border: '1px solid #eee' }}
-              >
-                {suggestedRows.length > 0 ? (
-                  suggestedRows.map((row, index) => (
-                    <div key={`suggest-${index}`} className="text-center mb-4">
-                      <span className="badge text-bg-light border mb-2" style={{ fontSize: '10px' }}>{row.label}</span>
-                      <Image
-                        src={row.item.img}
-                        alt=""
-                        width={400}
-                        height={500}
-                        unoptimized
-                        style={{ width: '100%', height: 'auto', objectFit: 'contain', maxHeight: '400px' }}
-                        className="img-fluid rounded"
-                      />
-                      <p className="small fw-medium mt-2">{row.item.name}</p>
-                    </div>
-                  ))
-                ) : (
-                  <div className="h-100 d-flex flex-column align-items-center justify-content-center text-muted opacity-50">
-                    <p className="small text-center">Click Shuffle to generate<br/>a second choice</p>
-                  </div>
-                )}
-              </div>
-            </div>
-
+            )) } <p className="text-center text-muted mt-5 small">No {weather} items</p>
           </div>
-        )}
+        </div>
+
+        {/* OPTION B */}
+        <div className="col-5 col-md-4">
+          <p className="text-center small text-uppercase fw-bold text-secondary mb-2">Option B</p>
+          <div className="outfit-board p-2 bg-white rounded-4 shadow-sm border" style={{ height: '65vh', overflowY: 'auto' }}>
+            {rowsB.length > 0 ? rowsB.map((row, index) => (
+              <div key={`b-${index}`} className="position-relative mb-2 outfit-item">
+                <span className="badge position-absolute top-0 start-0 m-2 glass-badge2" style={{fontSize: '10px'}}>{row.label}</span>
+                <Image
+                  src={row.item.img}
+                  alt=""
+                  width={500}
+                  height={600}
+                  unoptimized
+                  className="img-fluid rounded-3 shadow-sm border bg-white"
+                  style={{ width: '100%', height: 'auto',display: 'block', objectFit: 'cover' }}
+                />
+              </div>
+            )) : <p className="text-center text-muted mt-5 small">No {weather} items</p>}
+          </div>
+        </div>
       </div>
     </div>
   );

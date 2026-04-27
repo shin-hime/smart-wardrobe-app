@@ -22,7 +22,7 @@ function readFileAsDataUrl(file) {
 export default function WardrobePage() {
   const router = useRouter();
   const [allowed, setAllowed] = useState(false);
-  const [weather, setWeather] = useState("Clear");
+  const [weather, setWeather] = useState("Sunny");
   const [clothes, setClothes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [formError, setFormError] = useState("");
@@ -40,7 +40,7 @@ export default function WardrobePage() {
   const [form, setForm] = useState({
     name: "",
     description: "",
-    itemWeather: "Clear",
+    itemWeather: "Sunny",
     itemCategory: "top",
   });
   const [file, setFile] = useState(null);
@@ -186,7 +186,7 @@ export default function WardrobePage() {
       setForm({
         name: "",
         description: "",
-        itemWeather: "Clear",
+        itemWeather: "Sunny",
         itemCategory: "top",
       });
       setFile(null);
@@ -210,7 +210,7 @@ export default function WardrobePage() {
     setEditingData({
       name: item.name || "",
       description: item.description || "",
-      weather: item.weather || "Clear",
+      weather: item.weather || "Sunny",
       category: item.category || "top",
       img: item.img || "",
     });
@@ -303,27 +303,27 @@ export default function WardrobePage() {
           <button
             type="button"
             className={`btn btn-sm ${
-              weather === "Clear" ? "btn-dark" : "btn-outline-secondary"
+              weather === "Sunny" ? "btn-dark" : "btn-outline-secondary"
             }`}
-            onClick={() => setWeather("Clear")}
+            onClick={() => setWeather("Sunny")}
           >
             Sunny
           </button>
           <button
             type="button"
             className={`btn btn-sm ${
-              weather === "Rain" ? "btn-dark" : "btn-outline-secondary"
+              weather === "Rainy" ? "btn-dark" : "btn-outline-secondary"
             }`}
-            onClick={() => setWeather("Rain")}
+            onClick={() => setWeather("Rainy")}
           >
-            Rain
+            Rainy
           </button>
           <button
             type="button"
             className={`btn btn-sm ${
-              weather === "Clouds" ? "btn-dark" : "btn-outline-secondary"
+              weather === "Cloudy" ? "btn-dark" : "btn-outline-secondary"
             }`}
-            onClick={() => setWeather("Clouds")}
+            onClick={() => setWeather("Cloudy")}
           >
             Cloudy
           </button>
@@ -414,9 +414,9 @@ export default function WardrobePage() {
                   value={form.itemWeather}
                   onChange={onFormChange}
                 >
-                  <option value="Clear">Clear / sunny</option>
-                  <option value="Rain">Rain</option>
-                  <option value="Clouds">Clouds</option>
+                  <option value="Sunny">Clear / Sunny</option>
+                  <option value="Rainy">Rainy</option>
+                  <option value="Cloudy">Cloudy</option>
                   <option value="All">All weather</option>
                 </select>
               </div>
@@ -431,7 +431,8 @@ export default function WardrobePage() {
                   value={form.itemCategory}
                   onChange={onFormChange}
                 >
-                  <option value="hat">Hat / accessory</option>
+                  <option value="hat">Hat </option>
+                  <option value="accessory">Accessory</option>  
                   <option value="top">Top</option>
                   <option value="bottom">Pants / skirt</option>
                   <option value="dress">Dress</option>
@@ -510,9 +511,9 @@ export default function WardrobePage() {
                               value={editingData.weather}
                               onChange={onEditFormChange}
                             >
-                              <option value="Clear">Clear / sunny</option>
-                              <option value="Rain">Rain</option>
-                              <option value="Clouds">Clouds</option>
+                              <option value="Sunny">Clear / Sunny</option>
+                              <option value="Rainy">Rainy</option>
+                              <option value="Cloudy">Cloudy</option>
                               <option value="All">All weather</option>
                             </select>
                           </div>
@@ -526,7 +527,8 @@ export default function WardrobePage() {
                               value={editingData.category}
                               onChange={onEditFormChange}
                             >
-                              <option value="hat">Hat / accessory</option>
+                              <option value="hat">Hat</option>
+                              <option value="accessory">Accessory</option>
                               <option value="top">Top</option>
                               <option value="bottom">Pants / skirt</option>
                               <option value="dress">Dress</option>

@@ -2,9 +2,10 @@ import { NextResponse } from "next/server";
 import { getSessionUserIdFromCookies } from "@/lib/session";
 import { deleteClothingItem, updateClothingItem } from "@/lib/store";
 
-const WEATHER_OPTIONS = new Set(["Clear", "Rain", "Clouds", "All"]);
+const WEATHER_OPTIONS = new Set(["Sunny", "Rainy", "Cloudy", "All"]);
 const CATEGORY_OPTIONS = new Set([
   "hat",
+  "accessory",
   "top",
   "bottom",
   "dress",
@@ -47,14 +48,14 @@ export async function PUT(request, { params }) {
   }
   if (!WEATHER_OPTIONS.has(weather)) {
     return NextResponse.json(
-      { error: "Weather must be Clear, Rain, Clouds, or All." },
+      { error: "Weather must be Sunny, Rainy, Cloudy, or All." },
       { status: 400 }
     );
   }
   if (!CATEGORY_OPTIONS.has(category)) {
     return NextResponse.json(
       {
-        error: "Category must be hat, top, bottom, dress, shoes, or bag.",
+        error: "Category must be hat, accessory, top, bottom, dress, shoes, or bag.",
       },
       { status: 400 }
     );
