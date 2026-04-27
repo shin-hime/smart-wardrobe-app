@@ -71,21 +71,23 @@
 
 .heroButton {
   display: inline-block;
-  background-color: #849ebd;
-  color: white;
+  background-color: #f4f0ec; /* Cream */
+  color: #222;
   padding: 0.9rem 2.5rem;
   font-size: 1rem;
   font-weight: 600;
   text-decoration: none;
-  border: none;
+  border: 1px solid rgba(0, 0, 0, 0.05);
   border-radius: 4px;
-  transition: opacity 0.2s;
+  transition: all 0.2s;
   width: fit-content;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
 }
 
 .heroButton:hover {
-  opacity: 0.9;
-  color: white;
+  background-color: #ffffff;
+  color: #000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .heroButtonOutline {
