@@ -1,0 +1,178 @@
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+.pageTitle {
+  font-size: 3.5rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 2rem;
+  letter-spacing: -0.02em;
+  color: var(--sw-text);
+}
+
+.heroImageContainer {
+  width: 100%;
+  height: 450px;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 5rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+}
+
+.heroImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.heroImage:hover {
+  transform: scale(1.03);
+}
+
+.introSection {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-bottom: 7rem;
+}
+
+@media (min-width: 768px) {
+  .introSection {
+    grid-template-columns: 1.2fr 1fr;
+    gap: 6rem;
+  }
+}
+
+.introLarge {
+  font-size: 2.2rem;
+  line-height: 1.25;
+  font-weight: 400;
+  color: var(--sw-text);
+}
+
+.introSmall {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--sw-text-muted);
+  padding-top: 0.5rem;
+}
+
+.featuresGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  margin-bottom: 7rem;
+}
+
+@media (min-width: 768px) {
+  .featuresGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+  }
+}
+
+.featureItem {
+  margin-bottom: 4.5rem;
+}
+
+.featureHeader {
+  font-size: 0.85rem;
+  text-decoration: underline;
+  margin-bottom: 1.5rem;
+  color: var(--sw-text);
+  font-weight: 500;
+  text-underline-offset: 4px;
+}
+
+.featureLargeText {
+  font-size: 1.8rem;
+  line-height: 1.3;
+  margin-bottom: 1.2rem;
+  font-weight: 400;
+  color: var(--sw-text);
+}
+
+.featureSmallText {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--sw-text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.featureImageContainer {
+  width: 100%;
+  height: 280px;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-top: 2rem;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+}
+
+.featureImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.featureImageContainer:hover .featureImage {
+  transform: scale(1.05);
+}
+
+.bottomSection {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 5rem 0 3rem 0;
+}
+
+.bottomSmall {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: var(--sw-text-muted);
+  margin-bottom: 1.5rem;
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.bottomLarge {
+  font-size: 2.2rem;
+  line-height: 1.3;
+  margin-bottom: 2.5rem;
+  font-weight: 400;
+  color: var(--sw-text);
+}
+
+.bottomLinks {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
+.linkItem {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--sw-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--sw-text);
+  padding-bottom: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 500;
+  transition: opacity 0.2s ease;
+  letter-spacing: 0.05em;
+}
+
+.linkItem:hover {
+  opacity: 0.6;
+}

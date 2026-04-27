@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./home.module.css";
+import { TRENDING_OUTFITS } from "@/lib/trending";
 
 export default function Home() {
   return (
@@ -173,63 +174,26 @@ export default function Home() {
           </div>
 
           <div className={styles.trendingGrid}>
-            <article className={styles.trendCard}>
-              <Image
-                src="/close-up-woman-looking-wardrobe.jpg"
-                alt="Minimal neutral outfit inspiration"
-                width={1000}
-                height={700}
-                className={styles.trendImage}
-              />
-              <div className={styles.trendBody}>
-                <h3 className={styles.trendTitle}>Minimal neutrals</h3>
-                <p className={styles.muted}>
-                  Clean layers in beige, white, and soft brown for everyday wear.
-                </p>
-                <div className={styles.trendTags}>
-                  <span>Clear</span>
-                  <span>Clouds</span>
+            {TRENDING_OUTFITS.map((trend) => (
+              <article key={trend.id} className={styles.trendCard}>
+                <Image
+                  src={trend.image}
+                  alt={trend.alt}
+                  width={1000}
+                  height={700}
+                  className={styles.trendImage}
+                />
+                <div className={styles.trendBody}>
+                  <h3 className={styles.trendTitle}>{trend.title}</h3>
+                  <p className={styles.muted}>{trend.description}</p>
+                  <div className={styles.trendTags}>
+                    {trend.tags.map((tag) => (
+                      <span key={`${trend.id}-${tag}`}>{tag}</span>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            </article>
-
-            <article className={styles.trendCard}>
-              <Image
-                src="/wardrobe-renovation-winter.jpg"
-                alt="Smart casual city look inspiration"
-                width={1000}
-                height={700}
-                className={styles.trendImage}
-              />
-              <div className={styles.trendBody}>
-                <h3 className={styles.trendTitle}>Smart casual city</h3>
-                <p className={styles.muted}>
-                  A polished mix of top, bottom, and shoes for classes or work.
-                </p>
-                <div className={styles.trendTags}>
-                  <span>All weather</span>
-                </div>
-              </div>
-            </article>
-
-            <article className={styles.trendCard}>
-              <Image
-                src="/clothes-donations-collected-charity.jpg"
-                alt="Rain day layered outfit inspiration"
-                width={1000}
-                height={700}
-                className={styles.trendImage}
-              />
-              <div className={styles.trendBody}>
-                <h3 className={styles.trendTitle}>Rain-day layers</h3>
-                <p className={styles.muted}>
-                  Functional pieces with easy layers so you stay comfortable.
-                </p>
-                <div className={styles.trendTags}>
-                  <span>Rain</span>
-                </div>
-              </div>
-            </article>
+              </article>
+            ))}
           </div>
         </div>
       </section>
