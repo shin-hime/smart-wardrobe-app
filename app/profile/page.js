@@ -74,7 +74,7 @@ export default function ProfilePage() {
     setSaved("");
     setSaving(true);
     try {
-      let avatar = "";
+      let avatar = form.avatar;
         if (file) {
            avatar = await readFileAsDataUrl(file);
         }

@@ -138,7 +138,7 @@ export default function Navbar() {
                       <img
                         src={user.avatar}
                         alt="Profile"
-                        className="rounded-circle border"
+                        className="rounded-circle border me-2"
                         style={{ width: "45px", height: "45px", objectFit: "cover" }}
                       />
                     ) : (
@@ -148,7 +148,7 @@ export default function Navbar() {
                       />
                     )}
                     
-                    <span className="text-truncate" style={{ maxWidth: "10rem" }}>
+                    <span className="text-truncate ms-1" style={{ maxWidth: "10rem" }}>
                       {user.name || user.email}
                     </span>
                   </Link>
