@@ -166,70 +166,13 @@ export default function Home() {
           </div>
 
           <div className={styles.trendingGrid}>
-            <article className={styles.trendCard}>
-              <Image
-                src="/close-up-woman-looking-wardrobe.jpg"
-                alt="Minimal neutral outfit inspiration"
-                width={1000}
-                height={700}
-                className={styles.trendImage}
-              />
-              <div className={styles.trendBody}>
-                <h3 className={styles.trendTitle}>Minimal neutrals</h3>
-                <p className={styles.muted}>
-                  Clean layers in beige, white, and soft brown for everyday wear.
-                </p>
-                <div className={styles.trendTags}>
-                  <span>Sunny</span>
-                  <span>Cloudy</span>
-                </div>
-              </div>
-            </article>
-
-            <article className={styles.trendCard}>
-              <Image
-                src="/wardrobe-renovation-winter.jpg"
-                alt="Smart casual city look inspiration"
-                width={1000}
-                height={700}
-                className={styles.trendImage}
-              />
-              <div className={styles.trendBody}>
-                <h3 className={styles.trendTitle}>Smart casual city</h3>
-                <p className={styles.muted}>
-                  A polished mix of top, bottom, and shoes for classes or work.
-                </p>
-                <div className={styles.trendTags}>
-                  <span>All weather</span>
-                </div>
-              </div>
-            </article>
-
-            <article className={styles.trendCard}>
-              <Image
-                src="/clothes-donations-collected-charity.jpg"
-                alt="Rain day layered outfit inspiration"
-                width={1000}
-                height={700}
-                className={styles.trendImage}
-              />
-              <div className={styles.trendBody}>
-                <h3 className={styles.trendTitle}>Rain-day layers</h3>
-                <p className={styles.muted}>
-                  Functional pieces with easy layers so you stay comfortable.
-                </p>
-                <div className={styles.trendTags}>
-                  <span>Rainy</span>
-                </div>
-              </div>
-            </article>
             {TRENDING_OUTFITS.map((trend) => (
               <article key={trend.id} className={styles.trendCard}>
                 <Image
                   src={trend.image}
                   alt={trend.alt}
                   width={1000}
-                  height={700}
+                  height={1333}
                   className={styles.trendImage}
                 />
                 <div className={styles.trendBody}>
