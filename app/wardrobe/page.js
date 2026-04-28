@@ -46,6 +46,10 @@ export default function WardrobePage() {
   const [file, setFile] = useState(null);
   const [preview, setPreview] = useState("");
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchCategory, setSearchCategory] = useState("name"); // Default search by name
+  const [activeSearch, setActiveSearch] = useState(""); // Only updates on button click
+  
   function onFormChange(e) {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
@@ -291,44 +295,94 @@ export default function WardrobePage() {
       <div className="container py-5 text-secondary small">Loading…</div>
     );
   }
+  // filter clothes based on weather and search term 
+  const filteredClothes = clothes.filter((item) => {
+    // Always respect weather (including "All")
+  const matchesWeather =
+    item.weather === weather || item.weather === "All";
+    // If user hasn't clicked search, just show by weather
+    if (!activeSearch || activeSearch.trim() === "") {
+      return matchesWeather;
+    }
+
+    // If user clicked search, find the item
+    const searchLower = activeSearch.toLowerCase();
+
+    let matchesSearch = false;
+    if (searchCategory === "name") {
+       matchesSearch = item.name?.toLowerCase().includes(searchLower);
+    } else if (searchCategory === "category") {
+      // Check both 'category' and 'itemCategory' to be safe
+      const typeValue = item.category || item.itemCategory || "";
+      matchesSearch = typeValue.toLowerCase().includes(searchLower);
+    }
+    return matchesWeather && matchesSearch;
+  });
 
   return (
     <div className="container py-5">
-      <div className="sw-panel p-4 mb-4 text-center">
-        <h1 className="h3 fw-semibold mb-2">My wardrobe</h1>
-        <p className="text-secondary small mb-3">
-          Filter by weather: <strong className="text-dark">{weather}</strong>
-        </p>
-        <div className="btn-group flex-wrap" role="group">
-          <button
-            type="button"
-            className={`btn btn-sm ${
-              weather === "Sunny" ? "btn-dark" : "btn-outline-secondary"
-            }`}
-            onClick={() => setWeather("Sunny")}
-          >
-            Sunny
-          </button>
-          <button
-            type="button"
-            className={`btn btn-sm ${
-              weather === "Rainy" ? "btn-dark" : "btn-outline-secondary"
-            }`}
-            onClick={() => setWeather("Rainy")}
-          >
-            Rainy
-          </button>
-          <button
-            type="button"
-            className={`btn btn-sm ${
-              weather === "Cloudy" ? "btn-dark" : "btn-outline-secondary"
-            }`}
-            onClick={() => setWeather("Cloudy")}
-          >
-            Cloudy
-          </button>
+      <div className="sw-panel p-4 mb-4">
+        <div className="row align-items-center">
+          {/* Left Column: Title */}
+          <div className="col-md-3 text-start">
+             <h1 className="h4 fw-semibold mb-0">My wardrobe</h1>
+          </div>
+
+          {/* Middle Column: Weather Buttons */}
+          <div className="col-md-5 text-center">
+            <div className="btn-group" role="group">
+               {["Sunny", "Rainy", "Cloudy"].map((w) => (
+                 <button
+                   key={w}
+                   type="button"
+                   className={`btn btn-sm ${!activeSearch &&weather === w ? "btn-dark" : "btn-outline-secondary"}`}
+                   onClick={() => {
+                     setWeather(w);
+                     setActiveSearch(""); // Clear search when changing weather
+                     setSearchTerm("");   // Clearing search box
+                   }}
+                 >
+                   {w}
+                 </button>
+                ))}
+             </div>
+          </div>
+
+          {/* Right Column: Search Engine */}
+          <div className="col-md-4">
+             <div className="input-group input-group-sm">
+              <select 
+                 className="form-select" 
+                 style={{ maxWidth: "90px", fontSize: "0.75rem" }}
+                 value={searchCategory}
+                 onChange={(e) => setSearchCategory(e.target.value)}
+              >
+                <option value="name">Name</option>
+                <option value="category">Category</option>
+              </select>
+              <input
+                 type="text"
+                 className="form-control"
+                 placeholder="Search..."
+                 value={searchTerm}
+                 onChange={(e) => setSearchTerm(e.target.value)}
+                 onKeyDown={(e) => e.key === 'Enter' && setActiveSearch(searchTerm)}
+              />
+              <button 
+                 className="btn btn-dark" 
+                 type="button"
+                 onClick={() => {
+                  if (searchTerm.trim() !== "") {
+                       setActiveSearch(searchTerm)
+                     }
+                  }}
+              >
+                 🔍
+            </button>
+          </div>
         </div>
       </div>
+    </div>
 
       <div className="row g-4">
         <div className="col-lg-5">
@@ -463,9 +517,9 @@ export default function WardrobePage() {
           ) : null}
           {loading ? (
             <p className="text-secondary small">Loading your items…</p>
-          ) : clothes.length > 0 ? (
+          ) : filteredClothes.length > 0 ? (
             <div className="wardrobe-grid">
-              {clothes.map((item) => (
+              {filteredClothes.map((item) => (
                 <div key={item.id} className="wardrobe-card">
                   <div className="card border h-100">
                     <Image
