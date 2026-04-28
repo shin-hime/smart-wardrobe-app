@@ -144,15 +144,15 @@
 .showcaseGrid {
   display: grid;
   grid-template-columns: minmax(260px, 430px) 1fr;
-  gap: clamp(1rem, 3vw, 2rem);
+  gap: clamp(2rem, 5vw, 4rem);
   align-items: stretch;
 }
 
 .showcaseCard,
 .showcaseContent {
-  border: 1px solid var(--sw-border);
-  border-radius: 16px;
-  background: var(--sw-surface);
+  border: none;
+  border-radius: 0;
+  background: transparent;
 }
 
 .showcaseCard {
@@ -161,7 +161,7 @@
 }
 
 .showcaseContent {
-  padding: clamp(1rem, 2.5vw, 1.8rem);
+  padding: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -171,32 +171,42 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  aspect-ratio: 4/5;
 }
 
 .featureGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1rem;
+  gap: 2rem;
 }
 
 .featureCard {
-  border: 1px solid var(--sw-border);
-  border-radius: 14px;
-  background: var(--sw-surface);
-  padding: 0.7rem;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  padding: 0;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.featureCard:hover {
+  transform: translateY(-5px);
 }
 
 .featureImage {
   width: 100%;
-  height: 180px;
+  height: auto;
+  aspect-ratio: 4/5;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 0;
 }
 
 .featureTitle {
-  font-size: 1rem;
-  font-weight: 600;
-  margin: 0.8rem 0 0.4rem;
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  margin: 1.25rem 0 0.5rem;
   color: var(--sw-text);
 }
 

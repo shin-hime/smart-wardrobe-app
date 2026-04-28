@@ -70,7 +70,7 @@ export default function Home() {
               </p>
               <Link
                 href="/about"
-                className="btn btn-outline-secondary mt-4 rounded-pill"
+                className={`${styles.heroButtonOutline} mt-4`}
               >
                 Read more
               </Link>
@@ -160,7 +160,7 @@ export default function Home() {
                 Outfit inspiration this week
               </h2>
             </div>
-            <Link href="/ootd" className="btn btn-outline-secondary rounded-pill">
+            <Link href="/ootd" className={styles.heroButtonOutline}>
               Try in OOTD
             </Link>
           </div>
