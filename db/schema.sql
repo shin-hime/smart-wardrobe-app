@@ -1,4 +1,4 @@
--- Run once against your CSC350 database (e.g. u6708134_csc350).
+
 CREATE TABLE IF NOT EXISTS sw_users (
   id VARCHAR(64) NOT NULL PRIMARY KEY,
   email VARCHAR(255) NOT NULL UNIQUE,
