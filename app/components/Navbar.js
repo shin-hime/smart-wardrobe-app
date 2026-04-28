@@ -33,6 +33,20 @@ export default function Navbar() {
     router.refresh();
   }
 
+   // Add this useEffect below your existing one in the Navbar component
+  useEffect(() => {
+    const handleProfileUpdate = () => {
+      refresh(); // This calls your existing fetch function
+    };
+
+    // Listen for a custom "profileUpdated" event
+     window.addEventListener("profileUpdated", handleProfileUpdate);
+
+     return () => {
+       window.removeEventListener("profileUpdated", handleProfileUpdate);
+     };
+  }, [refresh]);
+
   const isAuthed = Boolean(user);
 
   return (

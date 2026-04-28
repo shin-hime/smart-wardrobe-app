@@ -93,7 +93,7 @@ export default function OotdPage() {
           <button className="btn btn-outline-dark rounded-pill px-4 fw-bold"
             onClick={handleShuffleA}          
             >
-            🔀 Shuffle Option A
+            ✨ Shuffle Option A
           </button>
           <button
             className="btn btn-dark rounded-pill px-4 fw-bold"

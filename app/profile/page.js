@@ -100,6 +100,7 @@ export default function ProfilePage() {
           avatar: data.user.avatar || "",
         });
           setPreview(data.user.avatar);
+          window.dispatchEvent(new Event("profileUpdated"));
         }
       setSaved("Profile saved.");
     } catch {
