@@ -38,7 +38,6 @@ const QUESTIONS = [
 ];
 
 export default function QuizPage() {
-  // We use standard React state, matching the class reference pattern
   const [currentStep, setCurrentStep] = useState(0);
   const [scores, setScores] = useState({
     Minimalist: 0,
