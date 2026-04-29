@@ -75,6 +75,15 @@
 .resultContainer {
   text-align: center;
   animation: fadeIn 0.5s ease-in;
+  background: var(--sw-surface);
+  padding: 4rem 2rem;
+  border-radius: 24px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+  border: 1px solid var(--sw-border);
+  max-width: 650px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
 }
 
 .resultTitle {

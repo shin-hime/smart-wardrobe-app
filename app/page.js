@@ -148,13 +148,13 @@ export default async function Home() {
       </section>
 
       {/* QUIZ BANNER SECTION */}
-      <section className={styles.section} style={{ backgroundColor: '#222', color: '#fff' }}>
+      <section className={styles.section} style={{ backgroundColor: 'var(--sw-mocha)', color: 'var(--sw-cream)' }}>
         <div className="container text-center py-5">
           <h2 className="mb-3" style={{ fontWeight: 700 }}>Don't know what to wear?</h2>
-          <p className="mb-4 text-light" style={{ maxWidth: 600, margin: '0 auto', fontSize: '1.1rem' }}>
+          <p className="mb-4" style={{ maxWidth: 600, margin: '0 auto', fontSize: '1.1rem', color: 'rgba(240, 231, 213, 0.85)' }}>
             Take our quick 1-minute style quiz to discover your personal aesthetic and get tailored outfit recommendations.
           </p>
-          <Link href="/quiz" className="btn btn-light rounded-pill px-4 py-2 fw-semibold">
+          <Link href="/quiz" className="btn rounded-pill px-4 py-2 fw-semibold" style={{ backgroundColor: 'var(--sw-cream)', color: 'var(--sw-mocha)' }}>
             Discover Personal Style
           </Link>
         </div>
