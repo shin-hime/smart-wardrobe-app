@@ -106,16 +106,7 @@ export default function Navbar() {
                     OOTD
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <Link
-                    className={`nav-link ${
-                      pathname.startsWith("/profile") ? "active" : ""
-                    }`}
-                    href="/profile"
-                  >
-                    Profile
-                  </Link>
-                </li>
+
               </>
             ) : null}
           </ul>
@@ -125,44 +116,52 @@ export default function Navbar() {
                 <span className="nav-link disabled small">…</span>
               </li>
             ) : isAuthed ? (
-              <>
-                <li className="nav-item">
-                  <Link
-                    href="/profile"
-                    className="nav-link py-md-2 mb-0 text-truncate d-inline-block fw-semibold"
-                    style={{ maxWidth: "12rem" }}
-                    title={user.email ? `Signed in as ${user.email}` : ""}
-                  >
-                    {/* 1. Display the Profile Picture (Avatar) */}
-                    {user.avatar ? (
-                      <img
-                        src={user.avatar}
-                        alt="Profile"
-                        className="rounded-circle border me-2"
-                        style={{ width: "45px", height: "45px", objectFit: "cover" }}
-                      />
-                    ) : (
-                      <div 
-                        className="rounded-circle bg-secondary d-inline-block" 
-                        style={{ width: "45px", height: "45px" }} 
-                      />
-                    )}
-                    
-                    <span className="text-truncate ms-1" style={{ maxWidth: "10rem" }}>
-                      {user.name || user.email}
-                    </span>
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <button
-                    type="button"
-                    className="btn btn-sm btn-outline-secondary rounded-pill px-3"
-                    onClick={logout}
-                  >
-                    Log out
-                  </button>
-                </li>
-              </>
+              <li className="nav-item dropdown">
+                <a
+                  className="nav-link dropdown-toggle py-md-2 mb-0 text-truncate d-inline-flex fw-semibold align-items-center"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  title={user.email ? `Signed in as ${user.email}` : ""}
+                >
+                  {/* 1. Display the Profile Picture (Avatar) */}
+                  {user.avatar ? (
+                    <img
+                      src={user.avatar}
+                      alt="Profile"
+                      className="rounded-circle border me-2"
+                      style={{ width: "45px", height: "45px", objectFit: "cover" }}
+                    />
+                  ) : (
+                    <div 
+                      className="rounded-circle bg-secondary d-inline-block me-2" 
+                      style={{ width: "45px", height: "45px" }} 
+                    />
+                  )}
+                  
+                  <span className="text-truncate" style={{ maxWidth: "10rem" }}>
+                    {user.name || user.email}
+                  </span>
+                </a>
+                <ul className="dropdown-menu dropdown-menu-end shadow border-0 mt-2 rounded-3">
+                  <li>
+                    <Link className="dropdown-item py-2 fw-medium" href="/profile">
+                      Profile
+                    </Link>
+                  </li>
+                  <li><hr className="dropdown-divider" /></li>
+                  <li>
+                    <button
+                      type="button"
+                      className="dropdown-item py-2 text-danger fw-medium"
+                      onClick={logout}
+                    >
+                      Log out
+                    </button>
+                  </li>
+                </ul>
+              </li>
             ) : (
               <>
                 <li className="nav-item">

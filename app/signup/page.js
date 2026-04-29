@@ -6,20 +6,22 @@ import { useState } from "react";
 
 export default function SignupPage() {
   const router = useRouter();
+  //holding current values of the three input fields
   const [form, setForm] = useState({
+
     name: "",
     email: "",
     password: "",
   });
   const [error, setError] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-
+  const [submitting, setSubmitting] = useState(false); //loading switch, It becomes true the moment the button is clicked to prevent double-submissions.
+  //onChange updates the state as user types
   function onChange(e) {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm({ ...form, [e.target.name]: e.target.value }); //copies the existing form data
   }
 
   async function onSubmit(e) {
-    e.preventDefault();
+    e.preventDefault(); //prevents browser from refreshing
     setError("");
     setSubmitting(true);
     try {
@@ -42,8 +44,8 @@ export default function SignupPage() {
       if (!res.ok) {
         setError(
           data.error ||
-            data.message ||
-            `Sign up failed (HTTP ${res.status}).`
+          data.message ||
+          `Sign up failed (HTTP ${res.status}).`
         );
         return;
       }

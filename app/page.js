@@ -2,8 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./home.module.css";
 import { TRENDING_OUTFITS } from "@/lib/trending";
+import { getSessionUserIdFromCookies } from "@/lib/session";
 
-export default function Home() {
+export default async function Home() {
+  const userId = await getSessionUserIdFromCookies();
+  const isAuthed = Boolean(userId);
   return (
     <main className={styles.landing}>
       <section className={styles.hero}>
@@ -28,18 +31,29 @@ export default function Home() {
               cloudy days.
             </p>
             <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-              <Link
-                href="/signup"
-                className={styles.heroButton}
-              >
-                Create account
-              </Link>
-              <Link
-                href="/login"
-                className={styles.heroButtonOutline}
-              >
-                Log in
-              </Link>
+              {isAuthed ? (
+                <Link
+                  href="#trending"
+                  className={styles.heroButton}
+                >
+                  Explore Trending
+                </Link>
+              ) : (
+                <>
+                  <Link
+                    href="/signup"
+                    className={styles.heroButton}
+                  >
+                    Create account
+                  </Link>
+                  <Link
+                    href="/login"
+                    className={styles.heroButtonOutline}
+                  >
+                    Log in
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         </div>
@@ -130,24 +144,19 @@ export default function Home() {
               </p>
             </article>
           </div>
-          <div className="row justify-content-center mt-4">
-            <div className="col-lg-8">
-              <ol className={styles.steps}>
-                <li>
-                  <strong>Create an account</strong> or log in. Your wardrobe
-                  opens only after you are signed in.
-                </li>
-                <li>
-                  <strong>Open Wardrobe</strong> and add each piece: photo,
-                  name, description, and the weather it suits.
-                </li>
-                <li>
-                  <strong>Filter by weather</strong> to see what fits the day
-                  you are planning for.
-                </li>
-              </ol>
-            </div>
-          </div>
+        </div>
+      </section>
+
+      {/* QUIZ BANNER SECTION */}
+      <section className={styles.section} style={{ backgroundColor: '#222', color: '#fff' }}>
+        <div className="container text-center py-5">
+          <h2 className="mb-3" style={{ fontWeight: 700 }}>Don't know what to wear?</h2>
+          <p className="mb-4 text-light" style={{ maxWidth: 600, margin: '0 auto', fontSize: '1.1rem' }}>
+            Take our quick 1-minute style quiz to discover your personal aesthetic and get tailored outfit recommendations.
+          </p>
+          <Link href="/quiz" className="btn btn-light rounded-pill px-4 py-2 fw-semibold">
+            Discover Personal Style
+          </Link>
         </div>
       </section>
 
