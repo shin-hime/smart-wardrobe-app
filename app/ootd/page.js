@@ -68,7 +68,7 @@ export default function OotdPage() {
   };
 
   if (!allowed) return <div className="p-5 text-center text-muted">Loading…</div>;
-
+  if (loading) return <div className="p-5 text-center text-muted">Loading outfits...</div>;
   return (
     <div className="container py-5">
       <div className="sw-panel p-4 mb-4 text-center bg-white border rounded shadow-sm">
